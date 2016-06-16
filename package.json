@@ -1,0 +1,19 @@
+{
+  "name": "meganote-server",
+  "version": "0.1.0",
+  "description": "a REST API for note-taking",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbaughman/meganote-server.git"
+  },
+  "author": "Seth Baughman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sbaughman/meganote-server/issues"
+  },
+  "homepage": "https://github.com/sbaughman/meganote-server#readme"
+}
