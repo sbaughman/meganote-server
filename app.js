@@ -1,11 +1,9 @@
 require('dotenv').load();
 var express = require('express');
-var db = require('mongoose');
+var db = require('./config/db');
+var Note = require('./models/note')
 
-// db.connect('mongodb://localhost/app');
 var app = express();
-
-var Note = db.model('Note', { title: String });
 
 app.get('/', function(req, res) {
   Note
