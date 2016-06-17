@@ -30,8 +30,7 @@ app.get('/notes', function(req, res) {
 app.post('/notes', function(req, res) {
   var note = new Note(req.body.note);
   note.save(function (err, note) {
-    if (err) return console.error(err);
-    console.log(note);
+    if (err) return res.json({error: err});
     res.json({note: note});
   });
 });
@@ -42,7 +41,7 @@ app.put('/notes/:id', function(req, res) {
   Note
     .findByIdAndUpdate(note._id, note, {new: true}, function(err, note) {
       if (err) {
-        return console.error(err);
+        res.json({error: err});
       } else {
         res.json({note: note});
       }
@@ -53,7 +52,7 @@ app.put('/notes/:id', function(req, res) {
 app.delete('/notes/:id', function(req, res) {
   Note.findByIdAndRemove(req.params.id, function(err, note) {
     if (err) {
-      return console.error(err);
+      res.json({error: err});
     } else {
       res.json({note: note});
     }
