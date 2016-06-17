@@ -49,6 +49,17 @@ app.put('/notes/:id', function(req, res) {
     });
 });
 
+// DELETE a note
+app.delete('/notes/:id', function(req, res) {
+  db.model('Note').findByIdAndRemove(req.params.id, function(err, note) {
+    if (err) {
+      return console.error(err);
+    } else {
+      res.json({note: note});
+    }
+  });
+})
+
 
 app.listen(3030, function() {
   console.log('listening on http://localhost:3030...');
