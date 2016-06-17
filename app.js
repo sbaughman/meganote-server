@@ -17,7 +17,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-// GET all notes
+// READ all notes
 app.get('/notes', function(req, res) {
   Note
     .find()
@@ -26,11 +26,12 @@ app.get('/notes', function(req, res) {
     });
 });
 
-// POST new note
+// CREATE new note
 app.post('/notes', function(req, res) {
   var note = new Note(req.body.note);
   note.save(function (err, note) {
     if (err) return console.error(err);
+    console.log(note);
     res.json({note: note});
   });
 });
