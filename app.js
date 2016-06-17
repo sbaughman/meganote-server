@@ -39,7 +39,7 @@ app.post('/notes', function(req, res) {
 // UPDATE existing note
 app.put('/notes/:id', function(req, res) {
   var note = req.body.note;
-  db.model('Note')
+  Note
     .findByIdAndUpdate(note._id, note, {new: true}, function(err, note) {
       if (err) {
         return console.error(err);
@@ -51,7 +51,7 @@ app.put('/notes/:id', function(req, res) {
 
 // DELETE a note
 app.delete('/notes/:id', function(req, res) {
-  db.model('Note').findByIdAndRemove(req.params.id, function(err, note) {
+  Note.findByIdAndRemove(req.params.id, function(err, note) {
     if (err) {
       return console.error(err);
     } else {
