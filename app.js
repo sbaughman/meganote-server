@@ -9,6 +9,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// CORS setup
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -16,6 +17,7 @@ app.use(function(req, res, next) {
   next();
 });
 
+// GET all notes
 app.get('/notes', function(req, res) {
   Note
     .find()
@@ -24,6 +26,7 @@ app.get('/notes', function(req, res) {
     });
 });
 
+// POST new note
 app.post('/notes', function(req, res) {
   var note = new Note(req.body.note);
   note.save(function (err, note) {
@@ -32,22 +35,17 @@ app.post('/notes', function(req, res) {
   });
 });
 
+// UPDATE existing note
 app.put('/notes/:id', function(req, res) {
-  var title = req.body.note.title;
-  var body_html = req.body.note.body_html;
-  console.log(req.body);
-  db.model('Note').findById(req.id, function(err, note) {
-    note.update({
-      title: title,
-      body_html: body_html
-    }, function(err) {
+  var note = req.body.note;
+  db.model('Note')
+    .findByIdAndUpdate(note._id, note, {new: true}, function(err, note) {
       if (err) {
         return console.error(err);
       } else {
         res.json({note: note});
       }
     });
-  });
 });
 
 
