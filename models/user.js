@@ -7,6 +7,15 @@ var UserSchema = db.Schema({
   created_at: { type: Date, default: Date.now }
 });
 
+UserSchema.pre('save', function(next) {
+  next();
+});
+
+UserSchema.pre('update', function(next) {
+  this.updated_at = Date.now();
+  next();
+});
+
 var User = db.model('User', UserSchema);
 
 module.exports = User;
