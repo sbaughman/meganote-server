@@ -73,10 +73,15 @@ app.get('/users', (req, res) => {
 // CREATE a new user
 app.post('/users', (req, res) => {
   var user = new User(req.body.user);
-  user.save((err, user) => {
-    if (err) return res.json({error: err});
-    res.json({ user: user });
-  });
+  if (user.password === user.passwordConfirmation) {
+    user.save((err, user) => {
+      if (err) return res.json({error: err});
+      res.json({ user: user });
+    });
+  }
+  else {
+    res.json(400, {error: 'Passwords do not match'});
+  }
 });
 
 
