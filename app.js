@@ -2,7 +2,7 @@ require('dotenv').load();
 var express = require('express');
 var db = require('./config/db');
 var Note = require('./models/note');
-var User = require('./models/note');
+var User = require('./models/user');
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -60,9 +60,21 @@ app.delete('/notes/:id', function(req, res) {
   });
 });
 
+// READ all users
+app.get('/users', (req, res) => {
+  User
+    .find()
+    .then((users) => {
+      res.json(users);
+    });
+});
+
+// CREATE a new user
 app.post('/users', (req, res) => {
-  res.json({
-    user: { name: 'It worked!' }
+  var user = new User(req.body.user);
+  user.save((err, user) => {
+    if (err) return res.json({error: err});
+    res.json({ user: user });
   });
 });
 
