@@ -4,6 +4,7 @@ var db = require('./config/db');
 var Note = require('./models/note');
 var User = require('./models/user');
 var bodyParser = require('body-parser');
+var bcrypt = require('bcryptjs');
 
 var app = express();
 
