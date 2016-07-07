@@ -2,6 +2,7 @@ require('dotenv').load();
 var express = require('express');
 var db = require('./config/db');
 var Note = require('./models/note');
+var User = require('./models/note');
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -57,7 +58,13 @@ app.delete('/notes/:id', function(req, res) {
       res.json({note: note});
     }
   });
-})
+});
+
+app.post('/users', (req, res) => {
+  res.json({
+    user: { name: 'It worked!' }
+  });
+});
 
 
 app.listen(3030, function() {
