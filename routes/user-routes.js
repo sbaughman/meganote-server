@@ -12,16 +12,27 @@ router.get('/', (req, res) => {
 
 // CREATE a new user
 router.post('/', (req, res) => {
-  var user = new User(req.body.user);
-  if (user.password === user.passwordConfirmation) {
-    user.save((err, user) => {
-      if (err) return res.json({error: err});
-      res.json({ user: user });
-    });
+  var user = req.body.user;
+  if (passwordsPresent(user) && !passwordsMatch(user)) {
+    return res.status(422).json({error: 'Passwords do not match'});
   }
-  else {
-    res.status(400).json({error: 'Passwords do not match'});
-  }
+  user = new User({
+    name: user.name,
+    username: user.username,
+    password: user.password
+  });
+  user.save((err, user) => {
+    if (err) return res.json({error: err});
+    res.json({ user: user });
+  });
 });
 
 module.exports = router;
+
+function passwordsPresent(user) {
+  return (user.password && user.passwordConfirmation);
+}
+
+function passwordsMatch(user) {
+  return (user.password === user.passwordConfirmation);
+}
