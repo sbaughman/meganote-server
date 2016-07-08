@@ -4,19 +4,15 @@ var User = require('./models/user');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcryptjs');
 var noteRoutes = require('./routes/note-routes');
+var headersMiddleware = require('./middleware/headers');
 
 var app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// CORS setup
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT, POST,DELETE');
-  next();
-});
+// Middleware
+app.use(headersMiddleware);
 
 // Routes
 app.use('/api/v1/notes', noteRoutes);
