@@ -36,6 +36,13 @@ UserSchema.pre('update', function(next) {
   next();
 });
 
+UserSchema.methods.toJSON = function() {
+  var user = this.toObject();
+  delete user.password;
+  delete user.__v;
+  return user;
+};
+
 var User = db.model('User', UserSchema);
 
 module.exports = User;
