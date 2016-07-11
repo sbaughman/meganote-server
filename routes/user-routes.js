@@ -34,6 +34,16 @@ router.post('/', (req, res) => {
   });
 });
 
+// UPDATE a user
+router.put('/:id', (req, res) => {
+  var user = req.body.user;
+  User
+    .findByIdAndUpdate(user._id, user, {new: true}, (err, user) => {
+      if (err) return res.json({error: err});
+      res.json({user: user});
+    });
+});
+
 module.exports = router;
 
 function passwordsPresent(user) {
